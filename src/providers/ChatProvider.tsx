@@ -9,21 +9,21 @@ export interface ChatMessage {
 
 interface ChatState {
   messages: ChatMessage[]
-  currentASLText: string
+  currentISLText: string
   currentGesture: string | null
   isProcessing: boolean
 }
 
 type ChatAction =
   | { type: 'ADD_MESSAGE'; payload: ChatMessage }
-  | { type: 'SET_ASL_TEXT'; payload: string }
+  | { type: 'SET_ISL_TEXT'; payload: string }
   | { type: 'SET_CURRENT_GESTURE'; payload: string | null }
   | { type: 'SET_PROCESSING'; payload: boolean }
   | { type: 'CLEAR_MESSAGES' }
 
 const initialState: ChatState = {
   messages: [],
-  currentASLText: '',
+  currentISLText: '',
   currentGesture: null,
   isProcessing: false
 }
@@ -35,10 +35,10 @@ const chatReducer = (state: ChatState, action: ChatAction): ChatState => {
         ...state,
         messages: [...state.messages, action.payload]
       }
-    case 'SET_ASL_TEXT':
+    case 'SET_ISL_TEXT':
       return {
         ...state,
-        currentASLText: action.payload
+        currentISLText: action.payload
       }
     case 'SET_CURRENT_GESTURE':
       return {

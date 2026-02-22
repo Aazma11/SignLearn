@@ -2,19 +2,19 @@ import React, { useState, useEffect } from 'react'
 import { Mic, MicOff, Send } from 'lucide-react'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
 import { useChat } from '../providers/ChatProvider'
-import { getGesture } from '../utils/aslMapping'
+import { getGesture } from '../utils/islMapping'
 
 const VoiceInput: React.FC = () => {
   const [inputText, setInputText] = useState('')
   const { transcript, isListening, startListening, stopListening, resetTranscript, error } = useSpeechRecognition()
   const { dispatch } = useChat()
 
-  // Auto-process transcript when it changes
+  // Auto-process transcript when it changes (voice input path)
   useEffect(() => {
-    if (transcript && transcript.trim()) {
-      console.log(' SPEECH DETECTED:', transcript)
-      processMessage(transcript)
-    }
+    const t = transcript?.trim()
+    if (!t) return
+    processMessage(t)
+    resetTranscript()
   }, [transcript])
 
   const processMessage = (textToSend: string) => {
@@ -30,33 +30,24 @@ const VoiceInput: React.FC = () => {
     }
 
     dispatch({ type: 'ADD_MESSAGE', payload: message })
-    dispatch({ type: 'SET_ASL_TEXT', payload: textToSend })
+    dispatch({ type: 'SET_ISL_TEXT', payload: textToSend })
     dispatch({ type: 'SET_PROCESSING', payload: true })
 
-    // Process ASL gesture
+    // Process ISL gesture (normalize for voice: remove punctuation, try phrase with underscores)
+    const cleanText = textToSend.toLowerCase().trim().replace(/[.,!?]+$/, '')
+    const withUnderscores = cleanText.replace(/\s+/g, '_')
+    let gesture = getGesture(cleanText) || getGesture(withUnderscores)
+    let gestureKey: string | null = null
+    if (gesture) gestureKey = getGesture(cleanText) ? cleanText : withUnderscores
+    else {
+      const firstWord = cleanText.split(/\s+/)[0] || ''
+      gesture = getGesture(firstWord)
+      if (gesture) gestureKey = firstWord
+    }
     setTimeout(() => {
       dispatch({ type: 'SET_PROCESSING', payload: false })
-      
-      // First try to match the entire phrase
-      const cleanText = textToSend.toLowerCase().trim()
-      console.log(' LOOKING FOR PHRASE:', cleanText)
-      let gesture = getGesture(cleanText)
-      
-      // If no phrase match, try the first word
-      if (!gesture) {
-        const firstWord = cleanText.split(' ')[0]
-        console.log('🔍 LOOKING FOR WORD:', firstWord)
-        gesture = getGesture(firstWord)
-      }
-      
-      if (gesture) {
-        console.log('✅ FOUND GESTURE:', gesture.name)
-        dispatch({ type: 'SET_CURRENT_GESTURE', payload: cleanText })
-      } else {
-        console.log('❌ NO GESTURE FOUND FOR:', cleanText)
-        dispatch({ type: 'SET_CURRENT_GESTURE', payload: null })
-      }
-    }, 1000)
+      dispatch({ type: 'SET_CURRENT_GESTURE', payload: gestureKey })
+    }, 350)
   }
 
   const handleSendMessage = () => {
@@ -78,8 +69,8 @@ const VoiceInput: React.FC = () => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">Voice Input</h2>
+    <div className="bg-white rounded-2xl border border-violet-100 p-6 animate-card-glow shadow-[0_8px_30px_rgba(139,92,246,0.12)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.18)] transition-shadow duration-300">
+      <h2 className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600 mb-4">Voice Input</h2>
       
       <div className="space-y-4">
         <div className="flex items-center space-x-4">
@@ -87,8 +78,8 @@ const VoiceInput: React.FC = () => {
             onClick={handleVoiceToggle}
             className={`p-4 rounded-full transition-all duration-200 ${
               isListening 
-                ? 'bg-red-500 text-white animate-pulse' 
-                : 'bg-blue-500 text-white hover:bg-blue-600'
+                ? 'bg-red-500 text-white animate-pulse shadow-lg shadow-red-500/30' 
+                : 'bg-violet-500 text-white hover:bg-violet-600 shadow-lg shadow-violet-500/30'
             }`}
           >
             {isListening ? <MicOff size={24} /> : <Mic size={24} />}
@@ -117,12 +108,12 @@ const VoiceInput: React.FC = () => {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             placeholder="Or type your message here..."
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 px-4 py-2 border border-violet-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-400"
             onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
           />
           <button
             onClick={handleSendMessage}
-            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+            className="px-6 py-2 bg-violet-500 text-white rounded-xl hover:bg-violet-600 transition-all shadow-md hover:shadow-violet-500/30"
           >
             <Send size={20} />
           </button>

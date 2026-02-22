@@ -7,14 +7,14 @@ const ChatInterface: React.FC = () => {
 
   const clearMessages = () => {
     dispatch({ type: 'CLEAR_MESSAGES' })
-    dispatch({ type: 'SET_ASL_TEXT', payload: '' })
+    dispatch({ type: 'SET_ISL_TEXT', payload: '' })
     dispatch({ type: 'SET_CURRENT_GESTURE', payload: null })
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-white rounded-2xl border border-violet-100 p-6 animate-card-glow shadow-[0_8px_30px_rgba(139,92,246,0.12)] hover:shadow-[0_12px_40px_rgba(139,92,246,0.18)] transition-shadow duration-300">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-gray-800">Conversation</h2>
+        <h2 className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600">Conversation</h2>
         {state.messages.length > 0 && (
           <button
             onClick={clearMessages}
@@ -35,7 +35,7 @@ const ChatInterface: React.FC = () => {
           state.messages.map((message) => (
             <div
               key={message.id}
-              className="bg-blue-100 p-4 rounded-xl shadow-sm ml-8"
+              className="bg-violet-50 border border-violet-100 p-4 rounded-xl shadow-sm ml-8"
             >
               <div className="text-gray-800 font-medium">{message.text}</div>
               <div className="text-gray-500 text-sm mt-2">
@@ -47,7 +47,7 @@ const ChatInterface: React.FC = () => {
       </div>
 
       {state.currentGesture && (
-        <div className="mt-4 p-4 bg-green-100 text-green-800 rounded-xl">
+        <div className="mt-4 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl">
           <div className="font-medium">Current Gesture: {state.currentGesture}</div>
         </div>
       )}
