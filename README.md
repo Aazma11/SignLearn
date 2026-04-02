@@ -1,40 +1,39 @@
-# ASL Learning Assistant
+# Sign Language Learning Assistant
 
-An interactive American Sign Language learning application that helps users learn ASL through voice recognition, text input, and visual gesture instructions.
+An interactive AI-powered application that helps users learn Sign language through speech recognition, text input, grammar conversion and voice-based instructions.
+
+---
 
 ## Features
 
-- 🎤 **Voice Recognition**: Speak words and see them converted to text
-- 📝 **Text Input**: Type words manually as an alternative
-- 🤲 **ASL Gesture Display**: See detailed instructions for each ASL sign
-- 🔊 **Voice Instructions**: Audio guidance for learning gestures (Murf TTS)
-- 💬 **Chat Interface**: Conversation history with timestamps
-- 🎯 **Real-time Processing**: Instant gesture recognition and display
+- 🎤 **Voice Recognition**: Speak sentences and convert them into text  
+- 📝 **Text Input**: Type input manually  
+- 🔄 **ISL Grammar Conversion**: Converts English text into structured grammar 
+- 🔊 **Voice Instructions**: Step-by-step gesture guidance using TTS  
+- 💬 **Chat Interface**: Maintains conversation history 
+- 🎯 **Real-time Processing**: Instant conversion and learning feedback  
+- 🧠 **Quiz Module**: Test understanding and improve retention  
+- 📚 **Resources Section**: Access learning materials and references  
 
-## Supported Words
+---
 
-- Hello/Hi
-- Thank you/Thanks
-- Yes/No
-- Please/Sorry
-- Help/Love
-- And more...
+## Supported Functionalities
 
-## Technology Stack
+- Sentence to ISL conversion  
+- Grammar-aware translation  
+- Voice-based learning guidance  
+- Interactive quizzes  
+- History tracking  
 
-- **Frontend**: React + TypeScript
-- **Styling**: Tailwind CSS
-- **Voice Recognition**: Web Speech API
-- **Text-to-Speech**: Murf TTS API
-- **Build Tool**: Vite
+---
 
 ## Getting Started
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-   cd ASL
-   ```
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/Aazma11/SignLearn.git
+cd SignLearn
+```
 
 2. **Install dependencies**
    ```bash
@@ -48,37 +47,44 @@ An interactive American Sign Language learning application that helps users lear
 
 4. **Open in browser**
    - Navigate to `http://localhost:3000`
-   - Start speaking or typing to see ASL gestures
+   - Start speaking or typing to learn Sign Language
 
 ## Usage
 
 1. **Voice Input**: Click the microphone button and speak words like "hello"
 2. **Text Input**: Type words in the text field and press Enter
-3. **Learn Gestures**: See detailed ASL instructions for each word
-4. **Voice Guidance**: Listen to audio instructions for each gesture
+3. **Grammar Conversion**: View Structured Grammar formats
+4. **Learn Signs**: listen to detailed Voice instructions for each word
+5. **Practice** : Take quizzes and improve skills
 
 ## Project Structure
 
 ```
-ASL/
+Sign Learn/
 ├── src/
+│   ├── pages/
+│   │   ├── Home.tsx               # Landing page
+│   │   ├── Login.tsx              # User login
+│   │   ├── Register.tsx           # User registration
+│   │   ├── Dashboard.tsx          # Main dashboard
+│   │   ├── Practice.tsx           # Learning & practice module
+│   │   └── Resources.tsx          # Learning resources
 │   ├── components/
-│   │   ├── VoiceInput.tsx          # Voice recognition
-│   │   ├── ChatInterface.tsx       # Chat display
-│   │   └── GestureDisplay.tsx      # ASL gesture display
+│   │   ├── VoiceInput.tsx         # Speech recognition input
+│   │   ├── ChatInterface.tsx      # Chat UI & interaction
+│   │   └── GestureGuide.tsx       # Sign learning instructions
 │   ├── hooks/
-│   │   ├── useSpeechRecognition.ts # Voice input
-│   │   └── useMurfTTS.ts           # Murf TTS
+│   │   ├── useSpeechRecognition.ts # Voice input handling
+│   │   └── useMurfTTS.ts           # Text-to-speech (voice guidance)
 │   ├── providers/
-│   │   └── ChatProvider.tsx        # State management
+│   │   ├── AuthProvider.tsx       # Authentication state
+│   │   └── ChatProvider.tsx       # Chat state management
 │   ├── utils/
-│   │   └── aslMapping.ts           # ASL gestures
-│   └── App.tsx                     # Main app
+│   │   ├── aslMapping.ts          # Sign mapping logic
+│   │   └── islMapping.ts          # ISL grammar/mapping
+│   ├── App.tsx                   # Root component
+│   └── main.tsx                  # Entry point
 ```
-
-## Contributing
-
-This project was created for the Murf API hackathon. Feel free to contribute improvements!
 
 ## License
 
