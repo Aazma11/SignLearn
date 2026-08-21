@@ -3,6 +3,7 @@
 An interactive AI-powered application that helps users learn Sign language through speech recognition, text input, grammar conversion and voice-based instructions.
 
 ---
+<img width="1897" height="910" alt="Screenshot 2026-02-22 181846" src="https://github.com/user-attachments/assets/8f3fe30a-ed32-47ca-bc65-fb283e176870" />
 
 ## Features
 
